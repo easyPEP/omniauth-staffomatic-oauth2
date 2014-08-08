@@ -20,7 +20,7 @@ Here's a quick example, adding the middleware to a Rails app in `config/initiali
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :Staffomatic, ENV['STAFFOMATIC_API_KEY'], ENV['STAFFOMATIC_SHARED_SECRET']
+  provider :staffomatic, ENV['STAFFOMATIC_API_KEY'], ENV['STAFFOMATIC_SHARED_SECRET']
 end
 ```
 
@@ -28,18 +28,18 @@ end
 
 You can configure the scope, which you pass in to the `provider` method via a `Hash`:
 
-* `scope`: A comma-separated list of permissions you want to request from the user. See [the Staffomatic API docs](http://docs.staffomatic.com/api/tutorials/oauth) for a full list of available permissions.
+* `scope`: **(Not jet implemented)** A comma-separated list of permissions you want to request from the user. See [the staffomatic API docs](http://docs.staffomatic.com/api/tutorials/oauth) for a full list of available permissions.
 
-* `setup`: A lambda which dynamically sets the `site`. You must initiate the OmniAuth process by passing in a `shop` query parameter of the shop you're requesting permissions for. Ex. http://myapp.com/auth/staffomatic?shop=example.staffomatic.com
+* `setup`: A lambda which dynamically sets the `site`. You must initiate the OmniAuth process by passing in a `account` query parameter of the account you're requesting permissions for. Ex. http://myapp.com/auth/staffomatic?account=example.staffomatic.com
 
 For example, to request `read_users`, `read_shifts` and `write_applications` permissions and display the authentication page:
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :Staffomatic, ENV['STAFFOMATIC_API_KEY'], ENV['STAFFOMATIC_SHARED_SECRET'],
+  provider :staffomatic, ENV['STAFFOMATIC_API_KEY'], ENV['STAFFOMATIC_SHARED_SECRET'],
             :scope => 'read_users,read_shifts,write_spplications',
             :setup => lambda { |env| params = Rack::Utils.parse_query(env['QUERY_STRING'])
-                                     env['omniauth.strategy'].options[:client_options][:site] = "https://#{params['shop']}" }
+                                     env['omniauth.strategy'].options[:client_options][:site] = ENV['STAFFOMATIC_ACCOUNT_URL'] }
 end
 ```
 
