@@ -7,7 +7,7 @@ module OmniAuth
 
       option :client_options, {
         authorize_url: '/api/v3/oauth/authorize',
-        token_url: '/api/v3/oauth/access_token'
+        token_url: '/api/v3/oauth/token'
       }
 
       option :callback_url
