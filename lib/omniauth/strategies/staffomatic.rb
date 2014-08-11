@@ -28,7 +28,7 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= access_token.get('/api/v3/user').parsed["users"].try(:first)
+        @raw_info ||= access_token.get('/api/v3/user').parsed
       end
 
       def valid_site?
