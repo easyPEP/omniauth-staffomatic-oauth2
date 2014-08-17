@@ -6,7 +6,7 @@ module OmniAuth
       option :name, :staffomatic
 
       option :client_options, {
-        authorize_url: '/api/v3/oauth/authorize',
+        authorize_url: '/oauth/authorize',
         token_url: '/api/v3/oauth/token'
       }
 
