@@ -6,8 +6,8 @@ module OmniAuth
       option :name, :staffomatic
 
       option :client_options, {
-        authorize_url: '/oauth/authorize',
-        token_url: '/v3/oauth/token'
+        authorize_url: '/oauth/authorize', # redirect the user
+        token_url: '/v3/oauth/token' # api request to get user token.
       }
 
       option :callback_url
