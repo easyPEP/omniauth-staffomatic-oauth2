@@ -6,14 +6,14 @@ module OmniAuth
       option :name, :staffomatic
 
       option :client_options, {
-        authorize_url: '/oauth/authorize',
-        token_url: '/api/v3/oauth/token'
+        authorize_url: '/v3/oauth/authorize',
+        token_url: '/v3/oauth/token'
       }
 
       option :callback_url
       option :provider_ignores_state, true
-      option :staffomatic_domain, 'staffomatic.com'
-      option :easypep_domain,     'easypep.de'
+      option :staffomatic_domain, 'staffomaticapp.com'
+      option :easypep_domain,     'staffomaticapp.com'
       option :development_domain, 'staffomatic-api.dev'
 
       uid do
@@ -33,6 +33,10 @@ module OmniAuth
 
       def valid_site?
         !!(/\A(https|http)\:\/\/[a-zA-Z0-9][a-zA-Z0-9\-]*\.(#{Regexp.quote(options[:development_domain])}|#{Regexp.quote(options[:staffomatic_domain])}|#{Regexp.quote(options[:easypep_domain])})[\/]?\z/ =~ options[:client_options][:site])
+      end
+
+      def fix_https
+        options[:client_options][:site].gsub!(/\Ahttp\:/, 'https:')
       end
 
       # well, we should do that, but it's hard in dev mode!
