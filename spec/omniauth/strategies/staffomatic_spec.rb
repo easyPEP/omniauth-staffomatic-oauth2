@@ -42,7 +42,7 @@ describe OmniAuth::Strategies::Staffomatic do
     end
 
     it 'has correct authorize url' do
-      subject.client.options[:authorize_url].should eq('/v3/oauth/authorize')
+      subject.client.options[:authorize_url].should eq('/oauth/authorize')
     end
 
     it 'has correct token url' do
