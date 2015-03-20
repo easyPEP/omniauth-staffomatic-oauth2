@@ -23,12 +23,25 @@ module OmniAuth
       info do
         {
           email: raw_info["email"],
-          name: raw_info["full_name"]
+          name: "#{raw_info['first_name']} #{raw_info['last_name']}"
         }
       end
 
       def raw_info
-        @raw_info ||= access_token.get('/api/v3/user').parsed
+        @raw_info ||= access_token.get(api_path('user')).parsed
+        @raw_info
+      end
+
+      # should return a proper API path including account subdomain
+      # e.g.: /v3/demo/user.json
+      def api_path(path)
+        "/v3/#{account_subdomain}/#{path}.json"
+      end
+
+      def account_subdomain
+        host = URI.parse(options[:client_options][:site]).host
+        subdomain = host.remove(".#{options[:development_domain]}").remove(".#{options[:staffomatic_domain]}").remove(".#{options[:easypep_domain]}")
+        subdomain
       end
 
       def valid_site?
